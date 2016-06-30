@@ -26,22 +26,14 @@
     }
 
   </style>
-    <paper-card>
-      <div>
-        <img src="{{user.picture.thumbnail}}">
-      </div>
-      <div class="contact-name">{{user.name.first}}</div>
-      <contact-fav-icon user="{{user}}"></contact-fav-icon>
-    </paper-card>
+    
   </template>
 
   <script>
     Polymer({
       is: 'contact-item',
       properties: {
-        user: {
-          type: Object
-        }
+        
       }
     })
   </script>

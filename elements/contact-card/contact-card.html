@@ -87,39 +87,14 @@
       }
     </style>
 
-    <paper-card class="cards">
-      <div class="card-content">
-        <img src="{{user.picture.large}}">
-        <iron-icon icon="star"></iron-icon>
-        <p class="user-name">{{user.name.first}}</p>
-      </div>
-        <div class="card-actions">
-          <template is="dom-if" if="{{!user.favorite}}">
-            <paper-icon-button class="icon-check" icon="check" on-tap="markAsFavorite"></paper-icon-button>
-            <paper-icon-button class="icon-clear" on-tap="_removeContact" icon="clear">Nope</paper-icon-button>
-          </template>
-          <template is="dom-if" if="{{user.favorite}}">
-            <paper-icon-button class="icon-clear" on-tap="_removeContact" icon="clear">Nope</paper-icon-button>
-          </template>
-        </div>
-    </paper-card>
+    
 
   </template>
   <script>
     Polymer({
       is: 'contact-card',
-      behaviors: [Polymer.FavoriteBehaviour],
       properties: {
-        user: {
-          type: Object
-        }
-      },
-      _removeContact: function() {
-        this.toggleClass('removed');
-        setTimeout(function(){
-          this.fire('remove-card', {user: this.user});
-          this.toggleClass('removed');
-        }.bind(this), 500);
+      
       }
     })
   </script>
