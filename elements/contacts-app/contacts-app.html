@@ -6,6 +6,7 @@
 <link rel="import" href="../../bower_components/paper-header-panel/paper-header-panel.html">
 <link rel="import" href="../contact-card/contact-card.html">
 <link rel="import" href="../contact-item/contact-item.html">
+<link rel="import" href="../contact-page/contact-page.html">
 
 <dom-module id="contacts-app">
   <template>
@@ -40,7 +41,7 @@
 
     .main-view {
       float: left;
-      width: 80%;
+      width: 70%;
     }
 
     .secondary-view {
@@ -55,12 +56,15 @@
       .main-view {
         width: 100%;
       }
+      .contact-card:{
+        padding: 5%;
+      };
     }
 
     </style>
     <iron-ajax
       auto
-      url="https://randomuser.me/api/?results={{cardsNumber}}"
+      url="https://randomuser.me/api/?page={{pageNumber}}&results={{cardsNumber}}&seed=abc"
       last-response="{{users}}"
       handle-as="json">
     </iron-ajax>
@@ -69,20 +73,58 @@
         <h3 class="header-title"> S|ngular Polymer contacts </h3>
       <paper-toolbar>
     </paper-header-panel>
+
+    <contact-page pageNumber="1"></contact-page>
     <section class="container">
-        <section class="main-view">
-         
+        <section class="mainView">
+          <template id="mainView" is="dom-repeat" items="{{users.results}}">
+            <contact-card id="contact-card" user="{{item}}"></contact-card>
+          </template> 
+
         </section>
         <aside class="secondary-view">
-          
+        
         </aside>
+   
     </section>
   </template>
   <script>
     Polymer({
       is: 'contacts-app',
+      properties:{
+        pageNumber:{
+          type: Number,
+          value:1
+        },
+        cardsNumber:{
+          type: Number,
+          value:10
+        },
+        users:{
+          type:Array
+        }
+
+      },
+      listeners: {
+        "_removeCard":"_removeContact",
+        "pageNumber":"_changePage"
+      },
+      ready: function(){
      
-      
+        console.log(this.users);
+      },
+      _removeContact: function(ev,param){
+
+        console.log(param.user.name.first);
+        var index = this.users.results.indexOf(param.user);
+        this.users.results.splice(index,1);
+        this.$.mainView.render();
+      },
+      _changePage: function(ev,param){
+        console.log(param.pageNumber+1);
+        this.pageNumber=param.pageNumber+1;
+        this.$.mainView.render();
+      }
     })
   </script>
 </dom-module>

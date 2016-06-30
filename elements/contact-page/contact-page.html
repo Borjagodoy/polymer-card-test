@@ -1,0 +1,38 @@
+
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<dom-module id="contact-page">
+<template>
+<style is="custom-style">
+  paper-tabs[no-bar] paper-tab.iron-selected {
+    color: #ffff8d;
+  }
+  #plainTabs{
+  	background: #0d47a1;
+  	color:white;
+  }
+</style>
+
+<paper-tabs on-tap="changePage" id="plainTabs" selected="0" no-bar>
+  <paper-tab>1</paper-tab>
+  <paper-tab>2</paper-tab>
+  <paper-tab >3</paper-tab>
+</paper-tabs>
+</template>
+</dom-module>
+<script>
+	Polymer({
+		is:"contact-page",
+		properties:{
+			pageNumber:{
+				type:"Number",
+				value:"1"
+			}
+		},
+		changePage: function(){		
+		  this.async(function() {           
+          	this.fire("pageNumber",{pageNumber:this.$.plainTabs.selected});
+          }, 20);	
+		}
+
+	});
+</script>
